@@ -16,6 +16,7 @@ import com.dmfa.picoplaca.enums.RestrictionDaysEnum;
  */
 public class GeneralUtils {
 	
+	private static final String DATE_FORMAT = "dd/MM/yyyy";
 	public static final Pattern licensePlatePattern = Pattern.compile("[a-zA-Z]{3}[\\-]?\\d{3,4}");
 	public static final Pattern timePattern = Pattern.compile("[a-zA-Z]{3}[\\-]?\\d{3,4}");
 	
@@ -48,24 +49,57 @@ public class GeneralUtils {
 		}
 	}
 	
-	public static boolean isValidDate(String dateTime) {
-		try {
-			getDate(dateTime);
-			return true;
-		} catch (ParseException e) {
+	/**
+	 * Method that validate that date
+	 * 
+	 * @param date date in String
+	 * @return true if date is valid
+	 */
+	public static boolean isValidDate(String date) {
+		if (date == null) {
 			return false;
 		}
-		
+
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+		sdf.setLenient(false);
+
+		try {
+			sdf.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 	
-	public static Date getDate(String dateTime) throws ParseException {
-		return new SimpleDateFormat("dd/MM/yyyy").parse(dateTime);
+	/**
+	 * Method that parse the date
+	 * 
+	 * @param date in String
+	 * @return Date
+	 * @throws ParseException exception in the parser
+	 */
+	public static Date getDate(String date) throws ParseException {
+		return new SimpleDateFormat(DATE_FORMAT).parse(date);
 	}
 	
-	public static Date getTime(String dateTime) throws ParseException {
-		return new SimpleDateFormat("HH:mm").parse(dateTime);
+	/**
+	 * Method that parse the time
+	 * 
+	 * @param time in String
+	 * @return Date
+	 * @throws ParseException exception in the parser
+	 */
+	public static Date getTime(String time) throws ParseException {
+		return new SimpleDateFormat("HH:mm").parse(time);
 	}
 	
+	/**
+	 * Method that return the day by date
+	 * 
+	 * @param date 
+	 * @return RestrictionDaysEnum with the day
+	 */
 	public static RestrictionDaysEnum getDay(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);

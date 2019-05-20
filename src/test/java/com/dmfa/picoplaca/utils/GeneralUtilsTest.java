@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.Test;
@@ -34,18 +35,35 @@ public class GeneralUtilsTest {
 		assertEquals("7", GeneralUtils.getTheLastChar("7"));
 		assertEquals("", GeneralUtils.getTheLastChar(""));
 		assertEquals("", GeneralUtils.getTheLastChar(null));
-		
 		assertNotEquals("7", GeneralUtils.getTheLastChar("PCG-2270"));
 	}
 
 	@Test
 	public void testIsValidDate() {
-		
+		assertTrue(GeneralUtils.isValidDate("10/12/2019"));
 	}
 	
 	@Test
-	public void testGetDate() {
+	public void testIsValidDateInvalidDay() {
+		assertFalse(GeneralUtils.isValidDate("40/12/2019"));
+	}
+	
+	@Test
+	public void testIsValidDateInvalidMonth() {
+		assertFalse(GeneralUtils.isValidDate("12/15/2019"));
+	}
+	
+	@Test
+	public void testIsValidDateNull() {
+		assertFalse(GeneralUtils.isValidDate(null));
+	}
+	
+	@Test
+	public void testGetDate() throws ParseException {
+		Date date = new Date();
+		String stringDate = new SimpleDateFormat("dd/MM/yyyy").format(date);
 		
+		assertEquals(stringDate, new SimpleDateFormat("dd/MM/yyyy").format(GeneralUtils.getDate(stringDate)));
 	}
 	
 	@Test

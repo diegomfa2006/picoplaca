@@ -23,11 +23,17 @@ public class App
 			params.setLicensePlateNumber(args[0]);
 			params.setDate(args[1]);
 			params.setTime(args[2]);
-			if(eva.validate(params)) {
-				System.out.println("You have Pico y Placa");
-			} else {
-				System.out.println("You don't have Pico y Placa");
+			
+			try {
+				if(eva.validate(params)) {
+					System.out.println("You have Pico y Placa");
+				} else {
+					System.out.println("You don't have Pico y Placa");
+				}
+			} catch (Exception e) {
+				System.out.println("The parameters is wrong");
 			}
+			
 		}
     }
 }
